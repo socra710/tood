@@ -19,8 +19,7 @@
         {#if buffet.hasTodayMenu === '1'}
           <button
             class="register-btn"
-            on:click={() => goto(`/tood/${buffet.todayMenuId}`)}
-            >상세보기</button
+            on:click={() => goto(`/tood/${buffet.todayMenuId}`)}>보기</button
           >
         {/if}
       </div>
