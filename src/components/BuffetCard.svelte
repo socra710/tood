@@ -15,7 +15,14 @@
           <button class="register-btn" on:click={() => goto(`/tood/${buffet.todayMenuId}`)}>상세보기</button>
         {/if}
       </div>
-      <div class="location">{buffet.location}</div>
+      <div class="location-price-row">
+        <span class="location">{buffet.location}</span>
+        {#if buffet.pricePerMeal}
+        <span class="price-info">
+        | <span class="price">{parseInt(buffet.pricePerMeal, 10).toLocaleString()}</span>원
+        </span>
+        {/if}
+      </div>
       <div class="strength">{buffet.strength}</div>
     </div>
   </div>
@@ -95,5 +102,22 @@
   .strength {
     font-size: 0.98rem;
     color: #23754e;
+  }
+
+  
+  .location-price-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  .price-info {
+    font-size: 0.97em;
+    color: #1976d2;
+  }
+  .price {
+    font-weight: bold;
+    margin-left: 0.5em;
   }
 </style>
