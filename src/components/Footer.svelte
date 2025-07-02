@@ -74,7 +74,7 @@
     font-size: 0.98em;
     font-weight: normal;
     opacity: 0.7;
-    margin-left: 0.7em;
+    /* margin-left: 0.7em; */
   }
   .footer-right {
     display: flex;
@@ -107,22 +107,5 @@
     background: #ff8c00;
     color: #fff;
     text-decoration: underline;
-  }
-
-  /* 모바일 반응형 */
-  @media (max-width: 600px) {
-    .footer-inner {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.9em;
-      text-align: center;
-    }
-    .footer-right {
-      justify-content: center;
-      margin-top: 0.5em;
-    }
-    .footer-left {
-      justify-content: center;
-    }
   }
 </style>
