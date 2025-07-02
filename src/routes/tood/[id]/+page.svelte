@@ -1,37 +1,16 @@
 <script lang="ts">
   import Header from '../../../components/Header.svelte';
   import Footer from '../../../components/Footer.svelte';
-  import LoadingBar from '../../../components/LoadingBar.svelte';
   import { page } from '$app/stores';
   import { onMount } from 'svelte';
 
-  let buffet: any = null; // 배열이 아니라 객체!
-  let loading = true;
-  let error: string | null = null;
+  export let data;
+  let buffet = data.buffet;
 
   let mapContainer: HTMLDivElement | null = null;
   let map: any = null;
 
   $: id = +$page.params.id;
-
-  async function fetchBuffetDetail(id: number) {
-    loading = true;
-    error = null;
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/tood?Id=${id}`);
-      if (!res.ok) throw new Error('API 요청 실패');
-      const result = await res.json();
-      if (result.success !== 'true') {
-        throw new Error(result.message || '알 수 없는 에러');
-      }
-      buffet = result.data; // 결과는 객체!
-    } catch (e) {
-      error = e.message;
-      buffet = null;
-    } finally {
-      loading = false;
-    }
-  }
 
   function loadKakaoMapScript(callback) {
     const scriptId = 'kakao-map-script';
@@ -50,80 +29,76 @@
   }
 
   onMount(() => {
-    fetchBuffetDetail(id);
+    if (buffet && mapContainer) {
+      loadKakaoMapScript(() => {
+        if (
+          mapContainer &&
+          window.kakao &&
+          window.kakao.maps &&
+          buffet.lat &&
+          buffet.lng
+        ) {
+          kakao.maps.load(() => {
+            const lat = Number(buffet.lat);
+            const lng = Number(buffet.lng);
+
+            map = new window.kakao.maps.Map(mapContainer, {
+              center: new window.kakao.maps.LatLng(lat, lng),
+              level: 3,
+            });
+            new window.kakao.maps.Marker({
+              map,
+              position: new window.kakao.maps.LatLng(lat, lng),
+            });
+          });
+        }
+      });
+    }
   });
-
-  // buffet가 바뀌고, loading이 끝났을 때 지도 생성
-  $: if (!loading && buffet && mapContainer) {
-    loadKakaoMapScript(() => {
-      if (
-        mapContainer &&
-        window.kakao &&
-        window.kakao.maps &&
-        buffet.lat &&
-        buffet.lng
-      ) {
-        kakao.maps.load(() => {
-          const lat = Number(buffet.lat);
-          const lng = Number(buffet.lng);
-
-          console.log(`지도 좌표: ${lat}, ${lng}`);
-
-          // 지도 초기화 (기존 지도 객체가 있으면 제거해도 됨)
-          map = new window.kakao.maps.Map(mapContainer, {
-            center: new window.kakao.maps.LatLng(lat, lng),
-            level: 3,
-          });
-          // 마커 표시
-          new window.kakao.maps.Marker({
-            map,
-            position: new window.kakao.maps.LatLng(
-              Number(buffet.lat),
-              Number(buffet.lng)
-            ),
-          });
-        });
-      }
-    });
-  }
 </script>
+
+<svelte:head>
+  <title>{buffet.name}</title>
+  <meta
+    name="description"
+    content="{buffet.name} 뷔페를 한눈에! 오늘 뭐 먹지? 고민은 Wat밥에서 해결하세요."
+  />
+  <meta property="og:title" content="{buffet.name} - 왓밥" />
+  <meta
+    property="og:description"
+    content="{buffet.name} 뷔페를 한눈에! 오늘 뭐 먹지? 고민은 Wat밥에서 해결하세요."
+  />
+  <!-- 필요시 추가적인 meta 태그 -->
+</svelte:head>
 
 <Header />
 
 <div class="main-detail-wrap">
   <main>
-    {#if loading}
-      <LoadingBar />
-    {:else if error}
-      <div class="error">{error}</div>
-    {:else if buffet}
-      <h2 class="buffet-title">{buffet.name}</h2>
-      <div class="buffet-info">
-        <p>
-          <strong>지역:</strong>
-          {buffet.region ? `${buffet.region} ` : ''}{buffet.location}
-        </p>
-        <p><strong>주소:</strong> {buffet.address}</p>
-        {#if buffet.strength}
-          <p><strong>특징:</strong> {buffet.strength}</p>
-        {/if}
-      </div>
-      <section class="menu-section">
-        <h3>{buffet.menuName}</h3>
-        <img
-          class="menu-img"
-          src={buffet.todayMenuImage}
-          alt="오늘의 메뉴 사진"
-        />
-        <div class="menu-text">{buffet.todayMenuText}</div>
-      </section>
-      <section class="map-section">
-        <h3>위치 지도</h3>
-        <div bind:this={mapContainer} class="map-box"></div>
-      </section>
-    {:else}
-      <div>해당 데이터 정보를 찾을 수 없습니다.</div>
-    {/if}
+    <h2 class="buffet-title">{buffet.name}</h2>
+    <div class="buffet-info">
+      <p>
+        <strong>지역:</strong>
+        {buffet.region ? `${buffet.region} ` : ''}{buffet.location}
+      </p>
+      <p><strong>주소:</strong> {buffet.address}</p>
+      {#if buffet.strength}
+        <p><strong>특징:</strong> {buffet.strength}</p>
+      {/if}
+    </div>
+    <section class="menu-section">
+      <h3>{buffet.menuName}</h3>
+      <img
+        class="menu-img"
+        src={buffet.todayMenuImage}
+        alt="오늘의 메뉴 사진"
+      />
+      <div class="menu-text">{buffet.todayMenuText}</div>
+    </section>
+    <section class="map-section">
+      <h3>위치 지도</h3>
+      <div bind:this={mapContainer} class="map-box"></div>
+    </section>
   </main>
 </div>
 
