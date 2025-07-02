@@ -1,6 +1,7 @@
 <footer>
   <p>&copy; 2025 오늘의 메뉴(Tood)</p>
 </footer>
+
 <style>
   footer {
     margin-top: 2rem;

@@ -6,21 +6,32 @@
 <div class="buffet-card">
   <div class="top-row">
     <div class="img-box">
-      <img src={buffet.image} alt="{buffet.name} 썸네일" width="64" height="64" />
+      <img
+        src={buffet.image}
+        alt="{buffet.name} 썸네일"
+        width="64"
+        height="64"
+      />
     </div>
     <div class="name-and-btn">
       <div class="name-btn-row">
         <span class="name">{buffet.name}</span>
-        {#if buffet.hasTodayMenu === "1"}
-          <button class="register-btn" on:click={() => goto(`/tood/${buffet.todayMenuId}`)}>상세보기</button>
+        {#if buffet.hasTodayMenu === '1'}
+          <button
+            class="register-btn"
+            on:click={() => goto(`/tood/${buffet.todayMenuId}`)}
+            >상세보기</button
+          >
         {/if}
       </div>
       <div class="location-price-row">
         <span class="location">{buffet.location}</span>
         {#if buffet.pricePerMeal}
-        <span class="price-info">
-        | <span class="price">{parseInt(buffet.pricePerMeal, 10).toLocaleString()}</span>원
-        </span>
+          <span class="price-info">
+            | <span class="price"
+              >{parseInt(buffet.pricePerMeal, 10).toLocaleString()}</span
+            >원
+          </span>
         {/if}
       </div>
       <div class="strength">{buffet.strength}</div>
@@ -104,7 +115,6 @@
     color: #23754e;
   }
 
-  
   .location-price-row {
     display: flex;
     align-items: center;

@@ -6,27 +6,27 @@
   import RegionSelector from '../components/RegionSelector.svelte';
   import BuffetCard from '../components/BuffetCard.svelte';
 
-  let selectedRegion = "경기";
-  let regions = ["서울", "부산", "대구", "광주", "대전"];
+  let selectedRegion = '경기';
+  let regions = ['서울', '부산', '대구', '광주', '대전'];
   let buffets = [];
   let loading = false;
-  let error = "";
+  let error = '';
 
   // API에서 뷔페 리스트 가져오기
   async function fetchBuffets() {
     loading = true;
-    error = "";
+    error = '';
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/buffets`);
       if (!res.ok) throw new Error('API 요청 실패');
       const result = await res.json(); // ← Java에서 보낸 JSON을 바로 파싱
 
-      if (result.success !== "true") {
-        throw new Error(result.message || "알 수 없는 에러");
+      if (result.success !== 'true') {
+        throw new Error(result.message || '알 수 없는 에러');
       }
       buffets = result.data; // 리스트는 result.data에 배열로 들어 있음
     } catch (e) {
-      error = "데이터를 불러오는 데 실패했습니다.";
+      error = '데이터를 불러오는 데 실패했습니다.';
     } finally {
       loading = false;
     }
@@ -38,21 +38,24 @@
   });
 
   // 선택된 지역에 맞는 뷔페만 필터
-  $: filteredBuffets = buffets.filter(b => b.region === selectedRegion);
+  $: filteredBuffets = buffets.filter((b) => b.region === selectedRegion);
 
   $: count = filteredBuffets.length;
   $: gridClass =
-    count === 1 ? 'one-card'
-    : count === 2 ? 'two-cards'
-    : count === 3 ? 'three-cards'
-    : '';
+    count === 1
+      ? 'one-card'
+      : count === 2
+        ? 'two-cards'
+        : count === 3
+          ? 'three-cards'
+          : '';
 </script>
 
 <Header />
 
 <main>
   <div class="ad-banner">[광고]</div>
-  
+
   <h2>오늘의 메뉴(Tood)</h2>
   <RegionSelector bind:selectedRegion {regions} />
 
@@ -61,7 +64,7 @@
   {:else if error}
     <div class="error-msg">{error}</div>
   {:else}
-    <div class={"buffet-list " + gridClass}>
+    <div class={'buffet-list ' + gridClass}>
       {#each filteredBuffets as buffet}
         <BuffetCard {buffet} />
       {:else}
@@ -76,7 +79,10 @@
 <Footer />
 
 <style>
-  main { max-width: 900px; margin: 0 auto; }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+  }
   .buffet-list {
     width: 100%;
     margin-top: 1.5rem;
@@ -130,13 +136,17 @@
     border-radius: 8px;
     color: #ff8c00;
   }
-  .loading-msg, .error-msg, .empty-msg {
+  .loading-msg,
+  .error-msg,
+  .empty-msg {
     text-align: center;
     margin: 2rem 0;
     font-size: 1.1rem;
     color: #555;
   }
-  .error-msg { color: #e44; }
+  .error-msg {
+    color: #e44;
+  }
 
   .loading-spinner {
     display: flex;
@@ -154,8 +164,12 @@
     margin-bottom: 1rem;
   }
   @keyframes spin {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
   .loading-text {
     color: #ff8c00;
