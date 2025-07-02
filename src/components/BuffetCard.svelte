@@ -12,7 +12,7 @@
       <div class="name-btn-row">
         <span class="name">{buffet.name}</span>
         {#if buffet.hasTodayMenu === "1"}
-          <button class="register-btn" on:click={() => goto(`/buffet/${buffet.todayMenuId}`)}>상세보기</button>
+          <button class="register-btn" on:click={() => goto(`/tood/${buffet.todayMenuId}`)}>상세보기</button>
         {/if}
       </div>
       <div class="location">{buffet.location}</div>

@@ -18,7 +18,7 @@
     loading = true;
     error = null;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/buffetsOne?Id=${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/tood?Id=${id}`);
       if (!res.ok) throw new Error('API 요청 실패');
       const result = await res.json();
       if (result.success !== "true") {
