@@ -1,5 +1,5 @@
 <footer>
-  <p>&copy; 2025 오늘의 메뉴(Tood)</p>
+  <p>&copy; 2025 오늘밥</p>
 </footer>
 
 <style>

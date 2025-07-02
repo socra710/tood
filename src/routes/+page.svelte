@@ -56,7 +56,7 @@
 <main>
   <div class="ad-banner">[광고]</div>
 
-  <h2>오늘의 메뉴(Tood)</h2>
+  <h2>오늘밥</h2>
   <RegionSelector bind:selectedRegion {regions} />
 
   {#if loading}
