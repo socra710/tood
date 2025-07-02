@@ -17,8 +17,7 @@
     if (!document.getElementById(scriptId)) {
       const script = document.createElement('script');
       script.id = scriptId;
-      script.src =
-        'https://dapi.kakao.com/v2/maps/sdk.js?appkey=38f3cb332825f04c4c29380a8fd7359c&autoload=false';
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_REST_JAVASCRIPT_KEY}&autoload=false`;
       script.onload = callback;
       document.head.appendChild(script);
     } else {

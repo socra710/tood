@@ -6,8 +6,22 @@
   import RegionSelector from '../components/RegionSelector.svelte';
   import BuffetCard from '../components/BuffetCard.svelte';
 
-  let selectedRegion = '경기';
-  let regions = ['서울', '부산', '대구', '광주', '대전'];
+  let selectedRegion = '';
+  let regions = [
+    '서울',
+    '부산',
+    '대구',
+    '광주',
+    '대전',
+    '울산',
+    '인천',
+    '경기',
+    '강원',
+    '충청',
+    '전라',
+    '경상',
+    '제주',
+  ];
   let searchTerm = '';
   let buffets = [];
   let loading = false;
@@ -33,9 +47,41 @@
     }
   }
 
+  function toSimpleRegion(apiRegion) {
+    // 앞 2글자만 반환 (예: "경기도" → "경기", "부산광역시" → "부산")
+    return apiRegion?.slice(0, 2) || '';
+  }
+
   // 첫 진입시 한번만 호출
   onMount(() => {
     fetchBuffets();
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const { latitude, longitude } = pos.coords;
+          try {
+            const res = await fetch(
+              `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${longitude}&y=${latitude}`,
+              {
+                headers: {
+                  Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
+                },
+              }
+            );
+            const data = await res.json();
+            const regionName = toSimpleRegion(
+              data.documents[0]?.region_1depth_name
+            );
+            console.log(regionName);
+            if (regions.includes(regionName)) {
+              selectedRegion = regionName;
+            }
+          } catch (e) {}
+        },
+        (err) => {}
+      );
+    }
   });
 
   // 선택된 지역 및 검색에 맞는 뷔페만 필터
