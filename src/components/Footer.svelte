@@ -1,5 +1,5 @@
 <footer>
-  <p>&copy; 2025 오늘밥</p>
+  <p>&copy; 2025 Wat밥</p>
 </footer>
 
 <style>

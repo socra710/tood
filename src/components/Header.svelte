@@ -1,5 +1,5 @@
 <header>
-  <h1>오늘밥</h1>
+  <h1>Wat밥</h1>
 </header>
 
 <style>
