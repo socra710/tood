@@ -11,7 +11,7 @@
     <div class="name-and-btn">
       <div class="name-btn-row">
         <span class="name">{buffet.name}</span>
-        {#if buffet.hasTodayMenu}
+        {#if buffet.hasTodayMenu === 1}
           <button class="register-btn" on:click={() => goto(`/buffet/${buffet.todayMenuId}`)}>상세보기</button>
         {/if}
       </div>

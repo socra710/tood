@@ -26,7 +26,7 @@
       }
       buffets = result.data; // 리스트는 result.data에 배열로 들어 있음
     } catch (e) {
-      error = "뷔페 데이터를 불러오는 데 실패했습니다.";
+      error = "데이터를 불러오는 데 실패했습니다.";
     } finally {
       loading = false;
     }
