@@ -1,12 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+
+    <title>Tood - 오늘의 메뉴</title>
+    <meta
+      name="description"
+      content="Tood는 전국 뷔페의 오늘의 메뉴와 한끼 가격 정보를 쉽고 빠르게 제공합니다. 지역별, 가격별 뷔페 검색 서비스!"
+    />
+
+    <!-- Open Graph 태그 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tood-lovat.vercel.app/" />
+    <meta property="og:title" content="Tood - 오늘의 뷔페 메뉴와 가격 정보" />
+    <meta
+      property="og:description"
+      content="Tood는 전국 뷔페의 오늘의 메뉴와 한끼 가격 정보를 쉽고 빠르게 제공합니다."
+    />
+    <meta
+      property="og:image"
+      content="https://tood-lovat.vercel.app/og-image.png"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
 </html>
