@@ -8,6 +8,7 @@
 
   let selectedRegion = '경기';
   let regions = ['서울', '부산', '대구', '광주', '대전'];
+  let searchTerm = '';
   let buffets = [];
   let loading = false;
   let error = '';
@@ -37,8 +38,10 @@
     fetchBuffets();
   });
 
-  // 선택된 지역에 맞는 뷔페만 필터
-  $: filteredBuffets = buffets.filter((b) => b.region === selectedRegion);
+  // 선택된 지역 및 검색에 맞는 뷔페만 필터
+  $: filteredBuffets = buffets
+    .filter((b) => b.region === selectedRegion)
+    .filter((b) => b.name && b.name.includes(searchTerm));
 
   $: count = filteredBuffets.length;
   $: gridClass =
@@ -58,6 +61,15 @@
 
   <h2>오늘의 메뉴</h2>
   <RegionSelector bind:selectedRegion {regions} />
+
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="뷔페명 검색"
+      bind:value={searchTerm}
+      maxlength="32"
+    />
+  </div>
 
   {#if loading}
     <LoadingBar />
@@ -176,5 +188,33 @@
     font-weight: 500;
     font-size: 1.1rem;
     letter-spacing: 1px;
+  }
+
+  .search-box {
+    margin: 1.2rem 0 0.3rem 0;
+    text-align: right;
+  }
+  .search-box input[type='text'] {
+    padding: 0.5em 1em;
+    border: 1.5px solid #ff8c00;
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 220px;
+    max-width: 98%;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .search-box input[type='text']:focus {
+    border-color: #ffb347;
+    background: #fff9f1;
+  }
+  @media (max-width: 600px) {
+    .search-box {
+      text-align: center;
+    }
+    .search-box input[type='text'] {
+      width: 98%;
+    }
   }
 </style>
