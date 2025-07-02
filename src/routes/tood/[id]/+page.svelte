@@ -97,7 +97,7 @@
         {/if}
       </div>
       <section class="menu-section">
-        <h3>오늘의 메뉴</h3>
+        <h3>{buffet.menuName}</h3>
         <img class="menu-img" src={buffet.todayMenuImage} alt="오늘의 메뉴 사진" />
         <div class="menu-text">{buffet.todayMenuText}</div>
       </section>
