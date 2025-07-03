@@ -91,8 +91,8 @@
         class="logo-img"
         src="/favicon.png"
         alt="Wat밥 로고"
-        width="25"
-        height="25"
+        width="28"
+        height="28"
       />
       <span class="title">Wat밥</span>
     </div>
@@ -110,7 +110,7 @@
           style="border-radius:50%;vertical-align:middle;margin-right:7px;"
         />
         <!-- <span class="user-name">{user.name}</span> -->
-        <button class="logout-btn" on:click={handleLogout}>로그아웃</button>
+        <!-- <button class="logout-btn" on:click={handleLogout}>로그아웃</button> -->
       {/if}
     </div>
   </div>
@@ -143,7 +143,7 @@
     box-shadow: 0 0 0 2px #fff;
     vertical-align: middle;
     position: relative;
-    top: -2px;
+    /* top: -2px; */
   }
   .title {
     font-size: 1.6rem;
@@ -155,7 +155,7 @@
     align-items: center;
     gap: 10px;
   }
-  .logout-btn {
+  /* .logout-btn {
     background: #fff;
     color: #ff8c00;
     border: none;
@@ -166,15 +166,15 @@
     cursor: pointer;
     margin-left: 8px;
     transition: background 0.18s;
-  }
-  .logout-btn:hover {
+  } */
+  /* .logout-btn:hover {
     background: #fee2a8;
   }
   .user-name {
     font-weight: 600;
     font-size: 1rem;
     color: #fff9e8;
-  }
+  } */
   @media (max-width: 600px) {
     .header-content {
       max-width: 100%;
@@ -184,9 +184,9 @@
       font-size: 1.2rem;
       letter-spacing: 1px;
     }
-    .logout-btn {
+    /* .logout-btn {
       font-size: 0.93rem;
       padding: 6px 13px 6px 8px;
-    }
+    } */
   }
 </style>
