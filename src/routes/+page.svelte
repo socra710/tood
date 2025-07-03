@@ -73,7 +73,6 @@
             const regionName = toSimpleRegion(
               data.documents[0]?.region_1depth_name
             );
-            console.log(regionName);
             if (regions.includes(regionName)) {
               selectedRegion = regionName;
             }
