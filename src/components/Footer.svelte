@@ -9,9 +9,7 @@
         width="25"
         height="25"
       />
-      <span class="footer-copy"
-        >Copyright © 2025 by Wat밥, Inc.All rights reserved.</span
-      >
+      <span class="footer-copy">Copyright © 2025 by Wat밥</span>
     </div>
     <div class="footer-right">
       <span class="footer-contact-label"></span>
