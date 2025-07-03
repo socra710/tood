@@ -91,12 +91,16 @@
         class="logo-img"
         src="/favicon.png"
         alt="Wat밥 로고"
-        width="32"
-        height="32"
+        width="25"
+        height="25"
       />
       <span class="title">Wat밥</span>
     </div>
     <div class="login-area">
+      <div
+        id="google-signin-btn"
+        style="display: {user ? 'none' : 'block'}"
+      ></div>
       {#if user}
         <img
           src={user.picture}
@@ -107,11 +111,6 @@
         />
         <span class="user-name">{user.name}</span>
         <button class="logout-btn" on:click={handleLogout}>로그아웃</button>
-      {:else}
-        <div
-          id="google-signin-btn"
-          style="display: {user ? 'none' : 'block'}"
-        ></div>
       {/if}
     </div>
   </div>
