@@ -6,10 +6,12 @@
         class="logo-img"
         src="/favicon.png"
         alt="Wat밥 로고"
-        width="32"
-        height="32"
+        width="25"
+        height="25"
       />
-      <span class="footer-copy">&copy; 2025 Wat밥</span>
+      <span class="footer-copy"
+        >Copyright © 2025 by Wat밥, Inc.All rights reserved.</span
+      >
     </div>
     <div class="footer-right">
       <span class="footer-contact-label"></span>
@@ -63,7 +65,7 @@
     font-size: 1.1rem;
   }
   .footer-copy {
-    font-size: 0.98em;
+    font-size: 0.7em;
     font-weight: normal;
     opacity: 0.7;
     /* margin-left: 0.7em; */

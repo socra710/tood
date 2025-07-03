@@ -1,7 +1,13 @@
 <script>
   import { onMount } from 'svelte';
+  import { onClickOutside } from '$lib/utils/onClickOutside'; // 외부 클릭시 닫기용 (직접 구현 필요할 수 있음)
 
   let user = null;
+  let showMenu = false;
+  let menuRef;
+
+  // 메뉴 바깥 클릭 시 닫기
+  // onClickOutside(menuRef, () => (showMenu = false));
 
   // Google Client ID 환경변수 또는 직접 하드코딩
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -53,6 +59,11 @@
       document.getElementById('google-signin-btn'),
       { theme: 'outline', size: 'large', type: 'icon' } // 개선: text: 'icon'
     );
+
+    if (menuRef) {
+      const { destroy } = onClickOutside(menuRef, () => (showMenu = false));
+      return destroy;
+    }
   });
 
   function handleCredentialResponse(response) {
@@ -101,16 +112,29 @@
         id="google-signin-btn"
         style="display: {user ? 'none' : 'block'}"
       ></div>
+
       {#if user}
-        <img
-          src={user.picture}
-          alt="프로필"
-          width="28"
-          height="28"
-          style="border-radius:50%;vertical-align:middle;margin-right:7px;"
-        />
-        <!-- <span class="user-name">{user.name}</span> -->
-        <!-- <button class="logout-btn" on:click={handleLogout}>로그아웃</button> -->
+        <div class="avatar-menu">
+          <img
+            src={user.picture}
+            alt="프로필"
+            class="avatar"
+            on:click={() => (showMenu = !showMenu)}
+          />
+          {#if showMenu}
+            <div
+              class="dropdown"
+              bind:this={menuRef}
+              use:onClickOutside={() => (showMenu = false)}
+            >
+              <!-- <div class="dropdown-item">{user.name}</div> -->
+              <div class="dropdown-item" on:click={() => goto('/user/profile')}>
+                정보수정
+              </div>
+              <div class="dropdown-item logout" on:click={logout}>로그아웃</div>
+            </div>
+          {/if}
+        </div>
       {/if}
     </div>
   </div>
@@ -188,5 +212,90 @@
       font-size: 0.93rem;
       padding: 6px 13px 6px 8px;
     } */
+  }
+
+  .avatar-menu {
+    position: relative;
+    display: inline-block;
+  }
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #ff8c00;
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.1);
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .avatar:hover {
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.2);
+  }
+
+  .dropdown {
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1.5px solid #ff8c00;
+    min-width: 150px;
+    box-shadow:
+      0 8px 32px rgba(255, 140, 0, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+    color: #222;
+    font-size: 15px;
+    padding: 6px 0;
+    animation: fadeIn 0.15s;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .dropdown::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    border-width: 0 8px 10px 8px;
+    border-style: solid;
+    border-color: transparent transparent #ff8c00 transparent;
+    display: block;
+  }
+
+  .dropdown-item {
+    padding: 11px 22px;
+    cursor: pointer;
+    color: #222;
+    border: none;
+    background: none;
+    transition:
+      background 0.18s,
+      color 0.18s;
+    border-radius: 6px;
+    margin: 0 6px;
+  }
+  .dropdown-item:hover {
+    background: #ff8c00;
+    color: #fff;
+  }
+  .dropdown-item + .dropdown-item {
+    margin-top: 2px;
+  }
+
+  .dropdown-item.logout {
+    color: #ff8c00;
+    font-weight: bold;
+  }
+  .dropdown-item.logout:hover {
+    background: #fff3e0;
+    color: #ff8c00;
   }
 </style>
