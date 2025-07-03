@@ -104,13 +104,13 @@
 <main>
   <div class="ad-banner">[광고]</div>
 
-  <h2>오늘의 메뉴</h2>
+  <h1>오늘의 메뉴</h1>
   <RegionSelector bind:selectedRegion {regions} />
 
   <div class="search-box">
     <input
       type="text"
-      placeholder="뷔페명 검색"
+      placeholder="이름으로 검색"
       bind:value={searchTerm}
       maxlength="32"
     />

@@ -109,7 +109,7 @@
           height="28"
           style="border-radius:50%;vertical-align:middle;margin-right:7px;"
         />
-        <span class="user-name">{user.name}</span>
+        <!-- <span class="user-name">{user.name}</span> -->
         <button class="logout-btn" on:click={handleLogout}>로그아웃</button>
       {/if}
     </div>

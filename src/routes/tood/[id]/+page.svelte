@@ -74,7 +74,7 @@
 
 <div class="main-detail-wrap">
   <main>
-    <h2 class="buffet-title">{buffet.name}</h2>
+    <h1 class="buffet-title">{buffet.name}</h1>
     <div class="buffet-info">
       <p>
         <strong>지역:</strong>
