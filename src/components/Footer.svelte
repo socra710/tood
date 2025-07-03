@@ -62,14 +62,6 @@
     font-weight: bold;
     font-size: 1.1rem;
   }
-  .footer-logo {
-    font-size: 1.7em;
-    vertical-align: middle;
-  }
-  .footer-title {
-    letter-spacing: 1px;
-    font-family: inherit;
-  }
   .footer-copy {
     font-size: 0.98em;
     font-weight: normal;

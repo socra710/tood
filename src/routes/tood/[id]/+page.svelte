@@ -175,12 +175,6 @@
     border: 1px solid #eee;
     margin-top: 0.9rem;
   }
-  .error {
-    color: #e74c3c;
-    font-size: 1.1rem;
-    text-align: center;
-    margin: 2rem 0;
-  }
   @media (max-width: 600px) {
     main {
       max-width: 98vw;

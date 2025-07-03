@@ -155,22 +155,6 @@
     align-items: center;
     gap: 10px;
   }
-  .login-btn {
-    background: #fff;
-    color: #444;
-    border: none;
-    border-radius: 5px;
-    padding: 7px 18px 7px 13px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: background 0.18s;
-  }
-  .login-btn:hover {
-    background: #ffe3b3;
-  }
   .logout-btn {
     background: #fff;
     color: #ff8c00;
@@ -200,7 +184,6 @@
       font-size: 1.2rem;
       letter-spacing: 1px;
     }
-    .login-btn,
     .logout-btn {
       font-size: 0.93rem;
       padding: 6px 13px 6px 8px;

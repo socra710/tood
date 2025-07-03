@@ -1,50 +1,68 @@
-import type { RequestHandler } from '@sveltejs/kit';
-import jwt from 'jsonwebtoken'; // 서버용 JWT 패키지 사용
+import { OAuth2Client } from 'google-auth-library';
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID!;
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-export const POST: RequestHandler = async ({ request, cookies }) => {
+export const POST = async ({ request, cookies }) => {
   const { credential } = await request.json();
 
-  // 1. id_token(JWT) 검증 (signature, audience 등 체크)
+  // 1. 구글 토큰 검증
+  const client = new OAuth2Client(GOOGLE_CLIENT_ID);
   let payload;
   try {
-    // 구글 공개키로 검증 (권장), 여기선 간단 예시
-    payload = jwt.decode(credential); // 검증 없이 decode만 (실제로는 검증 해야함)
-    // 실제 서비스에서는 jwt.verify() 또는 google-auth-library 사용 권장!
-    console.log('Decoded payload:', payload);
-    if (!payload || payload.aud !== GOOGLE_CLIENT_ID) {
-      throw new Error('Invalid token');
-    }
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: GOOGLE_CLIENT_ID,
+    });
+    payload = ticket.getPayload();
   } catch (e) {
     return new Response('Invalid token', { status: 401 });
   }
 
-  // 2. 세션(쿠키)에 사용자 정보 저장
-  // 예: user_id 또는 전체 payload, 실제 서비스에서는 세션스토어 사용 권장
+  const apiUrl = `${import.meta.env.VITE_API_URL}/user/upsert`; // 실제 API URL로 변경
+
+  const apiResponse = await fetch(apiUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      googleId: payload.sub,
+      email: payload.email,
+      name: payload.name,
+      picture: payload.picture,
+    }),
+  });
+
+  const result = await apiResponse.json();
+
+  if (result.success !== 'true') {
+    return new Response(result.message || '알 수 없는 에러', { status: 500 });
+  }
+
+  const userDate = result.data;
+
+  // 3. 세션 쿠키 발급 (user.id 등)
   cookies.set(
     'session_user',
     JSON.stringify({
-      sub: payload.sub,
-      name: payload.name,
-      email: payload.email,
-      picture: payload.picture,
+      googleId: userDate.googleId,
+      name: userDate.name,
+      email: userDate.email,
+      picture: userDate.picture,
     }),
     {
       path: '/',
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24, // 1일
+      maxAge: 60 * 60 * 24,
     }
   );
 
-  // 클라이언트로 사용자 정보 반환(필요시)
   return new Response(
     JSON.stringify({
-      name: payload.name,
-      email: payload.email,
-      picture: payload.picture,
+      googleId: userDate.googleId,
+      name: userDate.name,
+      email: userDate.email,
+      picture: userDate.picture,
     }),
     { headers: { 'Content-Type': 'application/json' } }
   );
