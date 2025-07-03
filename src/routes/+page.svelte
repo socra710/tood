@@ -6,7 +6,7 @@
   import RegionSelector from '../components/RegionSelector.svelte';
   import BuffetCard from '../components/BuffetCard.svelte';
 
-  let selectedRegion = '';
+  let selectedRegion = '경기';
   let regions = [
     '서울',
     '부산',

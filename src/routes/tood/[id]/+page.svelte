@@ -60,12 +60,12 @@
   <title>{buffet.name}</title>
   <meta
     name="description"
-    content="{buffet.name} 뷔페를 한눈에! 오늘 뭐 먹지? 고민은 Wat밥에서 해결하세요."
+    content="{buffet.name} 를 한눈에! 오늘 뭐 먹지? 고민은 Wat밥에서 해결하세요."
   />
   <meta property="og:title" content="{buffet.name} - 왓밥" />
   <meta
     property="og:description"
-    content="{buffet.name} 뷔페를 한눈에! 오늘 뭐 먹지? 고민은 Wat밥에서 해결하세요."
+    content="{buffet.name} 를 한눈에! 오늘 뭐 먹지? 고민은 Wat밥에서 해결하세요."
   />
   <!-- 필요시 추가적인 meta 태그 -->
 </svelte:head>
