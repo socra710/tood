@@ -108,7 +108,10 @@
         <span class="user-name">{user.name}</span>
         <button class="logout-btn" on:click={handleLogout}>로그아웃</button>
       {:else}
-        <div id="google-signin-btn"></div>
+        <div
+          id="google-signin-btn"
+          style="display: {user ? 'none' : 'block'}"
+        ></div>
       {/if}
     </div>
   </div>
