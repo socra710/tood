@@ -131,7 +131,9 @@
               <div class="dropdown-item" on:click={() => goto('/user/profile')}>
                 정보수정
               </div>
-              <div class="dropdown-item logout" on:click={logout}>로그아웃</div>
+              <div class="dropdown-item logout" on:click={handleLogout}>
+                로그아웃
+              </div>
             </div>
           {/if}
         </div>
