@@ -92,7 +92,9 @@
         src={buffet.todayMenuImage}
         alt="오늘의 메뉴 사진"
       />
-      <div class="menu-text">{buffet.todayMenuText}</div>
+      <div class="menu-text">
+        {@html buffet.todayMenuText}
+      </div>
     </section>
     <section class="map-section">
       <h3>위치 지도</h3>
