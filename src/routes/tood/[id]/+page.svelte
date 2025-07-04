@@ -94,8 +94,10 @@
           alt="오늘의 메뉴 사진"
         />
       {/if}
-      <div class="menu-text">
-        {@html buffet.todayMenuText}
+      <div class="ql-snow">
+        <div class="ql-editor">
+          {@html buffet.todayMenuText}
+        </div>
       </div>
     </section>
     <section class="map-section">
@@ -146,11 +148,11 @@
   .map-section {
     width: 100%;
     margin-top: 2rem;
-    background: #fffcf5;
+    /* background: #fffcf5; */
     border-radius: 12px;
     padding: 1.5rem 1.3rem;
     box-shadow: 0 2px 6px #f2e3d3;
-    text-align: center;
+    /* text-align: center; */
   }
   .menu-section {
     margin-bottom: 1rem;

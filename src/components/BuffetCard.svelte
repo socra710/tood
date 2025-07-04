@@ -1,6 +1,17 @@
 <script>
+  import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   export let buffet;
+
+  let user = null;
+
+  onMount(async () => {
+    // 예시: 쿠키나 API(/api/me 등)로 로그인 정보 불러오기
+    const res = await fetch('/api/me');
+    if (res.ok) {
+      user = await res.json();
+    }
+  });
 </script>
 
 <div class="buffet-card">
@@ -21,11 +32,14 @@
             class="register-btn"
             on:click={() => goto(`/tood/${buffet.todayMenuId}`)}>보기</button
           >
-        {:else}
+        {:else if user}
+          <!-- 로그인된 경우에만 등록 버튼 노출 -->
           <button
             class="register-btn"
-            on:click={() => goto(`/tood/register/${buffet.id}`)}>등록</button
+            on:click={() => goto(`/tood/register/${buffet.id}`)}
           >
+            등록
+          </button>
         {/if}
       </div>
       <div class="location-price-row">
