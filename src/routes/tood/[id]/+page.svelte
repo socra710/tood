@@ -333,7 +333,7 @@
     /* background: #fffcf5; */
     border-radius: 12px;
     padding: 1.5rem 1.3rem;
-    box-shadow: 0 2px 6px #f2e3d3;
+    /* box-shadow: 0 2px 6px #f2e3d3; */
     /* text-align: center; */
   }
   .menu-section {
@@ -365,7 +365,7 @@
     margin-top: 2rem;
     border-radius: 12px;
     padding: 1.5rem 1.3rem;
-    box-shadow: 0 2px 6px #f2e3d3;
+    /* box-shadow: 0 2px 6px #f2e3d3; */
   }
 
   .review-form {
@@ -506,6 +506,12 @@
     .map-section,
     .reviews-section {
       padding: 1rem 0.2rem;
+    }
+
+    .menu-section,
+    .map-section,
+    h3 {
+      padding-left: 0.4rem;
     }
 
     .rating-container {
