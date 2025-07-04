@@ -96,7 +96,7 @@
         ? 'two-cards'
         : count === 3
           ? 'three-cards'
-          : '';
+          : 'three-cards';
 </script>
 
 <Header />

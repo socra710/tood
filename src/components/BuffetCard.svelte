@@ -29,7 +29,7 @@
         <span class="name">{buffet.name}</span>
         {#if buffet.hasTodayMenu === '1'}
           <button
-            class="register-btn"
+            class="view-btn"
             on:click={() => goto(`/tood/${buffet.todayMenuId}`)}>보기</button
           >
         {:else if user}
@@ -113,7 +113,7 @@
     font-weight: bold;
     color: #333;
   }
-  .register-btn {
+  .view-btn {
     background: #ff8c00;
     color: #fff;
     border: none;
@@ -123,6 +123,30 @@
     font-weight: bold;
     cursor: pointer;
   }
+
+  .register-btn {
+    background: #f7f7f7;
+    color: #ff8c00;
+    border: 1px solid #f7f7f7;
+    border-radius: 8px;
+    font-size: 0.97rem;
+    padding: 0.2rem 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition:
+      background 0.18s,
+      color 0.18s;
+  }
+  .register-btn:hover:not(:disabled) {
+    background: #ffe0b2;
+    color: #e67e00;
+  }
+  .register-btn:disabled {
+    background: #f2ede7;
+    color: #bbb;
+    cursor: not-allowed;
+  }
+
   .location {
     color: #555;
     font-size: 0.98rem;
