@@ -256,6 +256,7 @@
     box-shadow: 0 2px 8px rgba(255, 140, 0, 0.1);
     transition: box-shadow 0.2s;
     cursor: pointer;
+    vertical-align: middle;
   }
   .avatar:hover {
     box-shadow: 0 4px 16px rgba(255, 140, 0, 0.2);
