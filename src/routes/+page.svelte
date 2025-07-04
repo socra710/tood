@@ -102,7 +102,7 @@
 <Header />
 
 <main>
-  <div class="ad-banner">[광고]</div>
+  <div class="ad-banner">[광고 문의]</div>
 
   <h1>오늘의 메뉴</h1>
   <RegionSelector bind:selectedRegion {regions} />
@@ -130,7 +130,7 @@
     </div>
   {/if}
 
-  <div class="ad-banner">[광고]</div>
+  <div class="ad-banner">[광고 문의]</div>
 </main>
 
 <Footer />
