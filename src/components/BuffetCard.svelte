@@ -21,6 +21,11 @@
             class="register-btn"
             on:click={() => goto(`/tood/${buffet.todayMenuId}`)}>보기</button
           >
+        {:else}
+          <button
+            class="register-btn"
+            on:click={() => goto(`/tood/register/${buffet.id}`)}>등록</button
+          >
         {/if}
       </div>
       <div class="location-price-row">
