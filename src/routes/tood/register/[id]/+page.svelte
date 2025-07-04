@@ -77,6 +77,18 @@
   }
 
   onMount(async () => {
+    let user = null;
+    const res = await fetch('/api/me');
+    if (res.ok) {
+      user = await res.json();
+    }
+
+    if (!user) {
+      alert('로그인이 필요한 서비스입니다.');
+      goto('/');
+      return;
+    }
+
     quill = new Quill(quillElem, {
       theme: 'snow',
       placeholder: '이미지, 서식 등 다양한 입력이 가능합니다.',
@@ -85,6 +97,7 @@
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline', 'strike'],
           [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ align: [] }], // Adds alignment options (left, center, right, justify)
           ['image'],
           ['clean'],
         ],

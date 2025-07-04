@@ -47,7 +47,7 @@
 
   async function submitReview() {
     if (!user) {
-      alert('로그인이 필요합니다.');
+      alert('로그인이 필요한 서비스 입니다.');
       return;
     }
 
@@ -292,15 +292,6 @@
 <Footer />
 
 <style>
-  .main-detail-wrap {
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 2.5rem 0 2rem 0;
-    background: #fffefa;
-  }
   main {
     width: 100%;
     max-width: 540px;
@@ -312,6 +303,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+  .main-detail-wrap {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2.5rem 0 2rem 0;
+    background: #fffefa;
   }
   .buffet-title {
     font-size: 2rem;
@@ -329,15 +329,12 @@
   .menu-section,
   .map-section {
     width: 100%;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     /* background: #fffcf5; */
     border-radius: 12px;
     padding: 1.5rem 1.3rem;
     /* box-shadow: 0 2px 6px #f2e3d3; */
     /* text-align: center; */
-  }
-  .menu-section {
-    margin-bottom: 1rem;
   }
   .menu-img {
     width: 100%;
@@ -347,9 +344,6 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-  }
-  .map-section {
-    margin-bottom: 2rem;
   }
   .map-box {
     width: 100%;
@@ -500,7 +494,7 @@
   @media (max-width: 600px) {
     main {
       max-width: 98vw;
-      padding: 1.2rem 0.2rem 1.5rem 0.2rem;
+      padding: 1.2rem 0.2rem 1.2rem 0.2rem;
     }
     .menu-section,
     .map-section,
