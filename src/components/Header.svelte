@@ -76,7 +76,7 @@
     }).then(async (res) => {
       if (res.ok) {
         user = await res.json();
-        window.location.replace('/'); // 로그아웃 후 홈으로 리다이렉트
+        window.location.reload(); // 현재 페이지 새로고침
         // 서버 세션으로 로그인 상태 유지, user 정보는 필요시만 저장
       } else {
         alert('로그인 실패');
@@ -99,7 +99,13 @@
 
 <header>
   <div class="header-content">
-    <div class="logo-area" on:click={() => goto('/')} on:keydown={(e) => e.key === 'Enter' && goto('/')} role="button" tabindex="0">
+    <div
+      class="logo-area"
+      on:click={() => goto('/')}
+      on:keydown={(e) => e.key === 'Enter' && goto('/')}
+      role="button"
+      tabindex="0"
+    >
       <img
         class="logo-img"
         src="/favicon.png"
@@ -122,11 +128,7 @@
             on:click={() => (showMenu = !showMenu)}
             aria-label="메뉴 열기"
           >
-            <img
-              src={user.picture}
-              alt="프로필"
-              class="avatar"
-            />
+            <img src={user.picture} alt="프로필" class="avatar" />
           </button>
           {#if showMenu}
             <div
@@ -135,15 +137,15 @@
               use:onClickOutside={() => (showMenu = false)}
             >
               <!-- <div class="dropdown-item">{user.name}</div> -->
-              <button 
-                class="dropdown-item" 
+              <button
+                class="dropdown-item"
                 on:click={() => goto('/user/profile')}
                 type="button"
               >
                 정보수정
               </button>
-              <button 
-                class="dropdown-item logout" 
+              <button
+                class="dropdown-item logout"
                 on:click={handleLogout}
                 type="button"
               >
@@ -275,7 +277,9 @@
     font-size: 15px;
     padding: 6px 0;
     animation: fadeIn 0.15s;
+    box-sizing: border-box; /* 추가 */
   }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -299,7 +303,7 @@
   }
 
   .dropdown-item {
-    padding: 11px 22px;
+    padding: 11px 15px; /* 패딩을 좌우 16px로 줄임 */
     cursor: pointer;
     color: #222;
     border: none;
@@ -308,15 +312,19 @@
       background 0.18s,
       color 0.18s;
     border-radius: 6px;
-    margin: 0 6px;
+    margin: 0; /* margin 제거 */
     width: 100%;
     text-align: left;
     font-size: 15px;
+    box-sizing: border-box; /* 추가! */
+    display: block; /* 추가: 100% 너비 보장 */
   }
+
   .dropdown-item:hover {
     background: #ff8c00;
     color: #fff;
   }
+
   .dropdown-item + .dropdown-item {
     margin-top: 2px;
   }
