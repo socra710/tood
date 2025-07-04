@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
   import { onClickOutside } from '$lib/utils/onClickOutside'; // 외부 클릭시 닫기용 (직접 구현 필요할 수 있음)
 
   let user = null;
@@ -98,7 +99,7 @@
 
 <header>
   <div class="header-content">
-    <div class="logo-area">
+    <div class="logo-area" on:click={() => goto('/')} on:keydown={(e) => e.key === 'Enter' && goto('/')} role="button" tabindex="0">
       <img
         class="logo-img"
         src="/favicon.png"
@@ -116,12 +117,17 @@
 
       {#if user}
         <div class="avatar-menu">
-          <img
-            src={user.picture}
-            alt="프로필"
-            class="avatar"
+          <button
+            class="avatar-button"
             on:click={() => (showMenu = !showMenu)}
-          />
+            aria-label="메뉴 열기"
+          >
+            <img
+              src={user.picture}
+              alt="프로필"
+              class="avatar"
+            />
+          </button>
           {#if showMenu}
             <div
               class="dropdown"
@@ -129,12 +135,20 @@
               use:onClickOutside={() => (showMenu = false)}
             >
               <!-- <div class="dropdown-item">{user.name}</div> -->
-              <div class="dropdown-item" on:click={() => goto('/user/profile')}>
+              <button 
+                class="dropdown-item" 
+                on:click={() => goto('/user/profile')}
+                type="button"
+              >
                 정보수정
-              </div>
-              <div class="dropdown-item logout" on:click={handleLogout}>
+              </button>
+              <button 
+                class="dropdown-item logout" 
+                on:click={handleLogout}
+                type="button"
+              >
                 로그아웃
-              </div>
+              </button>
             </div>
           {/if}
         </div>
@@ -162,6 +176,11 @@
     display: flex;
     align-items: center;
     gap: 7px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .logo-area:hover {
+    transform: scale(1.05);
   }
   .logo-img {
     background: #fff;
@@ -220,6 +239,12 @@
   .avatar-menu {
     position: relative;
     display: inline-block;
+  }
+  .avatar-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
   }
   .avatar {
     width: 36px;
@@ -284,6 +309,9 @@
       color 0.18s;
     border-radius: 6px;
     margin: 0 6px;
+    width: 100%;
+    text-align: left;
+    font-size: 15px;
   }
   .dropdown-item:hover {
     background: #ff8c00;
