@@ -104,6 +104,36 @@
 <main>
   <div class="ad-banner">[광고]</div>
 
+  <!-- 서비스 소개 섹션 -->
+  <section class="capabilities-section">
+    <h2>Wat밥이 뭘 할 수 있는거야? 🍽️</h2>
+    <div class="capabilities-grid">
+      <div class="capability-item">
+        <div class="capability-icon">🗺️</div>
+        <h3>지역별 뷔페 찾기</h3>
+        <p>전국 주요 도시의 뷔페 정보를 지역별로 쉽게 찾아볼 수 있어요</p>
+      </div>
+      <div class="capability-item">
+        <div class="capability-icon">🔍</div>
+        <h3>뷔페명 검색</h3>
+        <p>원하는 뷔페 이름을 입력해서 빠르게 찾을 수 있어요</p>
+      </div>
+      <div class="capability-item">
+        <div class="capability-icon">📍</div>
+        <h3>현재 위치 기반 추천</h3>
+        <p>GPS를 이용해 내 주변 지역의 뷔페를 자동으로 보여드려요</p>
+      </div>
+      <div class="capability-item">
+        <div class="capability-icon">📋</div>
+        <h3>상세한 뷔페 정보</h3>
+        <p>주소, 특징, 지도 등 뷔페의 자세한 정보를 제공해요</p>
+      </div>
+    </div>
+    <p class="capabilities-summary">
+      <strong>"오늘 뭐 먹지?"</strong> 고민을 Wat밥에서 쉽고 빠르게 해결하세요! 
+    </p>
+  </section>
+
   <h1>오늘의 메뉴</h1>
   <RegionSelector bind:selectedRegion {regions} />
 
@@ -140,6 +170,100 @@
     max-width: 900px;
     margin: 0 auto;
   }
+
+  /* 서비스 소개 섹션 스타일 */
+  .capabilities-section {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #fff9f1, #ffe8cc);
+    border-radius: 15px;
+    border: 2px solid #ffcc80;
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.1);
+  }
+
+  .capabilities-section h2 {
+    text-align: center;
+    color: #ff8c00;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .capability-item {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(255, 140, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .capability-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(255, 140, 0, 0.2);
+  }
+
+  .capability-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .capability-item h3 {
+    color: #ff8c00;
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .capability-item p {
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .capabilities-summary {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #ff8c00;
+    margin: 0;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.1);
+  }
+
+  @media (max-width: 600px) {
+    .capabilities-section {
+      margin: 1rem 0;
+      padding: 1.5rem 1rem;
+    }
+    
+    .capabilities-section h2 {
+      font-size: 1.5rem;
+    }
+    
+    .capabilities-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .capability-item {
+      padding: 1rem;
+    }
+    
+    .capabilities-summary {
+      font-size: 1rem;
+    }
+  }
+
   .buffet-list {
     width: 100%;
     margin-top: 1.5rem;
