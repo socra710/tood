@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   export let buffet;
+  export let reviewStats = null; // Review statistics passed from parent
 
   let user = null;
 
@@ -52,6 +53,18 @@
           </span>
         {/if}
       </div>
+      
+      <!-- Review Rating and Count -->
+      {#if reviewStats && reviewStats.reviewCount > 0}
+        <div class="review-stats">
+          <div class="rating-display">
+            <span class="stars">★</span>
+            <span class="rating-text">{reviewStats.overallRating}</span>
+          </div>
+          <span class="review-count">리뷰 {reviewStats.reviewCount}개</span>
+        </div>
+      {/if}
+      
       <div class="strength">{buffet.strength}</div>
     </div>
   </div>
@@ -155,6 +168,36 @@
   .strength {
     font-size: 0.98rem;
     color: #23754e;
+  }
+
+  .review-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .rating-display {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .stars {
+    color: #ff8c00;
+    font-size: 1.1rem;
+  }
+
+  .rating-text {
+    font-weight: bold;
+    color: #333;
+    font-size: 0.95rem;
+  }
+
+  .review-count {
+    color: #666;
+    font-size: 0.9rem;
   }
 
   .location-price-row {

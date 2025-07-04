@@ -24,6 +24,7 @@
   ];
   let searchTerm = '';
   let buffets = [];
+  let reviewStats = {}; // Store review statistics
   let loading = false;
   let error = '';
 
@@ -40,10 +41,28 @@
         throw new Error(result.message || '알 수 없는 에러');
       }
       buffets = result.data; // 리스트는 result.data에 배열로 들어 있음
+      
+      // Fetch review statistics
+      await fetchReviewStats();
     } catch (e) {
       error = '데이터를 불러오는 데 실패했습니다.';
     } finally {
       loading = false;
+    }
+  }
+
+  // 리뷰 통계 가져오기
+  async function fetchReviewStats() {
+    try {
+      const res = await fetch('/api/reviews/stats');
+      if (res.ok) {
+        const result = await res.json();
+        if (result.success) {
+          reviewStats = result.stats;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to fetch review stats:', e);
     }
   }
 
@@ -83,10 +102,16 @@
     }
   });
 
-  // 선택된 지역 및 검색에 맞는 뷔페만 필터
+  // 선택된 지역 및 검색에 맞는 뷔페만 필터하고 평점 높은 순으로 정렬
   $: filteredBuffets = buffets
     .filter((b) => b.region === selectedRegion)
-    .filter((b) => b.name && b.name.includes(searchTerm));
+    .filter((b) => b.name && b.name.includes(searchTerm))
+    .sort((a, b) => {
+      // 평점 높은 순으로 정렬
+      const ratingA = reviewStats[a.id]?.overallRating || 0;
+      const ratingB = reviewStats[b.id]?.overallRating || 0;
+      return ratingB - ratingA;
+    });
 
   $: count = filteredBuffets.length;
   $: gridClass =
@@ -123,7 +148,7 @@
   {:else}
     <div class={'buffet-list ' + gridClass}>
       {#each filteredBuffets as buffet}
-        <BuffetCard {buffet} />
+        <BuffetCard {buffet} reviewStats={reviewStats[buffet.id]} />
       {:else}
         <div class="empty-msg">해당 지역에 등록된 뷔페가 없습니다.</div>
       {/each}
