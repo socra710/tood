@@ -87,11 +87,13 @@
     </div>
     <section class="menu-section">
       <h3>{buffet.menuName}</h3>
-      <img
-        class="menu-img"
-        src={buffet.todayMenuImage}
-        alt="오늘의 메뉴 사진"
-      />
+      {#if buffet.todayMenuImage}
+        <img
+          class="menu-img"
+          src={buffet.todayMenuImage}
+          alt="오늘의 메뉴 사진"
+        />
+      {/if}
       <div class="menu-text">
         {@html buffet.todayMenuText}
       </div>
