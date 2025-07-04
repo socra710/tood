@@ -75,6 +75,7 @@
     }).then(async (res) => {
       if (res.ok) {
         user = await res.json();
+        window.location.replace('/'); // 로그아웃 후 홈으로 리다이렉트
         // 서버 세션으로 로그인 상태 유지, user 정보는 필요시만 저장
       } else {
         alert('로그인 실패');
