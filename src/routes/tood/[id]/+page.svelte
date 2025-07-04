@@ -16,7 +16,7 @@
     tasteRating: 0,
     priceRating: 0,
     serviceRating: 0,
-    comment: ''
+    comment: '',
   };
   let isSubmitting = false;
 
@@ -51,7 +51,11 @@
       return;
     }
 
-    if (newReview.tasteRating === 0 || newReview.priceRating === 0 || newReview.serviceRating === 0) {
+    if (
+      newReview.tasteRating === 0 ||
+      newReview.priceRating === 0 ||
+      newReview.serviceRating === 0
+    ) {
       alert('모든 항목에 점수를 매겨주세요.');
       return;
     }
@@ -73,7 +77,7 @@
           tasteRating: newReview.tasteRating,
           priceRating: newReview.priceRating,
           serviceRating: newReview.serviceRating,
-          comment: newReview.comment
+          comment: newReview.comment,
         }),
       });
 
@@ -83,7 +87,7 @@
           tasteRating: 0,
           priceRating: 0,
           serviceRating: 0,
-          comment: ''
+          comment: '',
         };
         await fetchReviews();
       } else {
@@ -116,7 +120,7 @@
   onMount(() => {
     checkUser();
     fetchReviews();
-    
+
     if (buffet && mapContainer) {
       loadKakaoMapScript(() => {
         if (
@@ -193,40 +197,40 @@
       <h3>위치 지도</h3>
       <div bind:this={mapContainer} class="map-box"></div>
     </section>
-    
+
     <!-- 리뷰 섹션 -->
     <section class="reviews-section">
       <h3>리뷰</h3>
-      
+
       {#if user}
         <div class="review-form">
           <h4>리뷰 작성</h4>
           <div class="rating-container">
-            <StarRating 
-              label="맛" 
+            <StarRating
+              label="맛"
               bind:rating={newReview.tasteRating}
-              onRatingChange={(rating) => newReview.tasteRating = rating}
+              onRatingChange={(rating) => (newReview.tasteRating = rating)}
             />
-            <StarRating 
-              label="가격" 
+            <StarRating
+              label="가격"
               bind:rating={newReview.priceRating}
-              onRatingChange={(rating) => newReview.priceRating = rating}
+              onRatingChange={(rating) => (newReview.priceRating = rating)}
             />
-            <StarRating 
-              label="친절" 
+            <StarRating
+              label="친절"
               bind:rating={newReview.serviceRating}
-              onRatingChange={(rating) => newReview.serviceRating = rating}
+              onRatingChange={(rating) => (newReview.serviceRating = rating)}
             />
           </div>
-          
+
           <textarea
             bind:value={newReview.comment}
             placeholder="리뷰를 작성해주세요..."
             maxlength="500"
             rows="4"
           ></textarea>
-          
-          <button 
+
+          <button
             class="submit-review-btn"
             on:click={submitReview}
             disabled={isSubmitting}
@@ -237,28 +241,48 @@
       {:else}
         <p class="login-message">리뷰를 작성하려면 로그인이 필요합니다.</p>
       {/if}
-      
+
       <div class="reviews-list">
         {#each reviews as review}
           <div class="review-item">
             <div class="review-header">
               <div class="reviewer-info">
-                <img src={review.userPicture} alt="프로필" class="reviewer-avatar" />
+                <img
+                  src={review.userPicture}
+                  alt="프로필"
+                  class="reviewer-avatar"
+                />
                 <span class="reviewer-name">{review.userName}</span>
               </div>
-              <span class="review-date">{new Date(review.createdAt).toLocaleDateString()}</span>
+              <span class="review-date"
+                >{new Date(review.createdAt).toLocaleDateString()}</span
+              >
             </div>
-            
+
             <div class="review-ratings">
-              <StarRating label="맛" rating={review.tasteRating} readonly={true} />
-              <StarRating label="가격" rating={review.priceRating} readonly={true} />
-              <StarRating label="친절" rating={review.serviceRating} readonly={true} />
+              <StarRating
+                label="맛"
+                rating={review.tasteRating}
+                readonly={true}
+              />
+              <StarRating
+                label="가격"
+                rating={review.priceRating}
+                readonly={true}
+              />
+              <StarRating
+                label="친절"
+                rating={review.serviceRating}
+                readonly={true}
+              />
             </div>
-            
+
             <p class="review-comment">{review.comment}</p>
           </div>
         {:else}
-          <p class="no-reviews">아직 리뷰가 없습니다. 첫 번째 리뷰를 남겨주세요!</p>
+          <p class="no-reviews">
+            아직 리뷰가 없습니다. 첫 번째 리뷰를 남겨주세요!
+          </p>
         {/each}
       </div>
     </section>
@@ -334,7 +358,7 @@
     border: 1px solid #eee;
     margin-top: 0.9rem;
   }
-  
+
   /* 리뷰 섹션 스타일 */
   .reviews-section {
     width: 100%;
@@ -343,26 +367,26 @@
     padding: 1.5rem 1.3rem;
     box-shadow: 0 2px 6px #f2e3d3;
   }
-  
+
   .review-form {
     background: #f9f9f9;
     padding: 1.5rem;
     border-radius: 12px;
     margin-bottom: 2rem;
   }
-  
+
   .review-form h4 {
     margin-bottom: 1rem;
     color: #333;
   }
-  
+
   .rating-container {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
     margin-bottom: 1rem;
   }
-  
+
   .review-form textarea {
     width: 100%;
     padding: 0.8rem;
@@ -373,12 +397,12 @@
     box-sizing: border-box;
     margin-bottom: 1rem;
   }
-  
+
   .review-form textarea:focus {
     outline: none;
     border-color: #ff8c00;
   }
-  
+
   .submit-review-btn {
     background: #ff8c00;
     color: white;
@@ -390,16 +414,16 @@
     cursor: pointer;
     transition: background 0.2s;
   }
-  
+
   .submit-review-btn:hover:not(:disabled) {
     background: #e67e00;
   }
-  
+
   .submit-review-btn:disabled {
     background: #ccc;
     cursor: not-allowed;
   }
-  
+
   .login-message {
     text-align: center;
     color: #666;
@@ -408,13 +432,13 @@
     border-radius: 12px;
     margin-bottom: 2rem;
   }
-  
+
   .reviews-list {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
   }
-  
+
   .review-item {
     background: #fff;
     border: 1px solid #eee;
@@ -422,50 +446,50 @@
     padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+
   .review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
   }
-  
+
   .reviewer-info {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
-  
+
   .reviewer-avatar {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
   }
-  
+
   .reviewer-name {
     font-weight: 600;
     color: #333;
   }
-  
+
   .review-date {
     color: #666;
     font-size: 0.9rem;
   }
-  
+
   .review-ratings {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     margin-bottom: 1rem;
   }
-  
+
   .review-comment {
     color: #333;
     line-height: 1.6;
     margin: 0;
   }
-  
+
   .no-reviews {
     text-align: center;
     color: #666;
@@ -476,28 +500,28 @@
   @media (max-width: 600px) {
     main {
       max-width: 98vw;
-      padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+      padding: 1.2rem 0.2rem 1.5rem 0.2rem;
     }
     .menu-section,
     .map-section,
     .reviews-section {
-      padding: 1rem 0.5rem;
+      padding: 1rem 0.2rem;
     }
-    
+
     .rating-container {
       gap: 0.6rem;
     }
-    
+
     .review-form {
       padding: 1rem;
     }
-    
+
     .review-header {
       flex-direction: column;
       align-items: flex-start;
       gap: 0.5rem;
     }
-    
+
     .review-ratings {
       gap: 0.3rem;
     }
