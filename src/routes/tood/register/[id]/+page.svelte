@@ -28,6 +28,35 @@
     }
   }
 
+  async function handleQuillImageUpload(file) {
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('/api/upload/image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Insert the image into the Quill editor
+        const range = quill.getSelection();
+        const index = range ? range.index : quill.getLength();
+        quill.insertEmbed(index, 'image', result.imageUrl);
+        
+        // Move cursor to after the image
+        quill.setSelection(index + 1);
+      } else {
+        alert(result.message || '이미지 업로드에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Image upload error:', error);
+      alert('이미지 업로드 중 오류가 발생했습니다.');
+    }
+  }
+
   async function handleSubmit() {
     if (!title.trim()) {
       alert('제목을 입력해주세요.');
@@ -102,6 +131,21 @@
           ['clean'],
         ],
       },
+    });
+
+    // Configure image upload handler
+    quill.getModule('toolbar').addHandler('image', function() {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+
+      input.onchange = function() {
+        const file = input.files[0];
+        if (file) {
+          handleQuillImageUpload(file);
+        }
+      };
     });
   });
 
