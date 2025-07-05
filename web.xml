@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+  <display-name>Tood Image Upload Servlet</display-name>
+  <description>Servlet for handling image uploads from Quill editor</description>
+
+  <!-- Servlet configuration -->
+  <servlet>
+    <servlet-name>ImageUploadServlet</servlet-name>
+    <servlet-class>com.tood.servlet.ImageUploadServlet</servlet-class>
+    <multipart-config>
+      <location>/tmp</location>
+      <max-file-size>10485760</max-file-size>  <!-- 10MB -->
+      <max-request-size>15728640</max-request-size>  <!-- 15MB -->
+      <file-size-threshold>1048576</file-size-threshold>  <!-- 1MB -->
+    </multipart-config>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ImageUploadServlet</servlet-name>
+    <url-pattern>/upload/image</url-pattern>
+  </servlet-mapping>
+
+  <!-- Security constraints for upload directory -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Upload Directory</web-resource-name>
+      <url-pattern>/uploads/*</url-pattern>
+      <http-method>DELETE</http-method>
+      <http-method>PUT</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>admin</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <!-- Error pages -->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error/404.html</location>
+  </error-page>
+  
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error/500.html</location>
+  </error-page>
+
+  <!-- Session timeout (30 minutes) -->
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+
+</web-app>
