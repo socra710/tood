@@ -76,19 +76,56 @@
     goto('/');
   }
 
+  // Function to handle image upload
+  async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/upload/image`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success && result.imageUrl) {
+        // Insert image into editor
+        const range = quill.getSelection();
+        quill.insertEmbed(
+          range.index,
+          'image',
+          import.meta.env.VITE_IMAGE_UPLOAD_URL + result.imageUrl
+        );
+      } else {
+        alert(result.message || '이미지 업로드에 실패했습니다.');
+      }
+    } catch (error) {
+      alert('이미지 업로드 중 오류가 발생했습니다.');
+      console.error('Image upload error:', error);
+    }
+  }
+
+  function selectLocalImage() {
+    // Show file input when toolbar button is clicked
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    // Handle file selection
+    input.onchange = async () => {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        await uploadImage(file);
+      }
+    };
+  }
+
   onMount(async () => {
-    let user = null;
-    const res = await fetch('/api/me');
-    if (res.ok) {
-      user = await res.json();
-    }
-
-    if (!user) {
-      alert('로그인이 필요한 서비스입니다.');
-      goto('/');
-      return;
-    }
-
     quill = new Quill(quillElem, {
       theme: 'snow',
       placeholder: '이미지, 서식 등 다양한 입력이 가능합니다.',
@@ -96,13 +133,46 @@
         toolbar: [
           [{ header: [1, 2, false] }],
           ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          [{ align: [] }], // Adds alignment options (left, center, right, justify)
+          [{ list: 'ordered' }, { list: 'bullet' }, { align: [] }],
+          ['code-block'],
           ['image'],
           ['clean'],
         ],
       },
     });
+
+    quill.getModule('toolbar').addHandler('image', function () {
+      selectLocalImage();
+    });
+
+    // Additionally, handle paste events for clipboard images
+    // quill.root.addEventListener('paste', (event) => {
+    //   const clipboardData = event.clipboardData;
+    //   if (!clipboardData || !clipboardData.items) return;
+
+    //   const items = clipboardData.items;
+
+    //   console.log(items);
+
+    //   for (let i = 0; i < items.length; i++) {
+    //     if (items[i].type.indexOf('image') !== -1) {
+    //       const file = items[i].getAsFile();
+
+    //       const formData = new FormData();
+    //       formData.append('image', file);
+
+    //       try {
+    //       } catch (error) {
+    //         alert('이미지 업로드 중 오류가 발생했습니다.');
+    //         console.error('Image upload error:', error);
+    //       }
+
+    //       event.preventDefault();
+    //       event.stopPropagation(); // 이벤트 전파 중지
+    //       break;
+    //     }
+    //   }
+    // });
   });
 
   onDestroy(() => {
